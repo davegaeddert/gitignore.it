@@ -1,0 +1,33 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
+
+@import "../bootstrap/less/variables";
+@import "../bootstrap-custom/less/variables-custom";
+@import "../bootstrap/less/mixins";
+
+body {
+	font-weight: 300;
+}
+
+select[multiple] {
+	height: 300px;
+}
+
+.steps-container {
+	.step {
+		.step-num {
+			position: absolute;
+			top: -30px;
+			left: -15px;
+			background-color: @brand-info;
+			color: white;
+			border-radius: 50%;
+			width: 55px;
+			height: 55px;
+			line-height: 50px;
+			text-align: center;
+		}
+		.step-desc {
+			text-align: center;
+		}
+	}
+}

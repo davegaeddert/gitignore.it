@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="gitignoreApp">
+	<head>
+		<meta charset="utf-8">
+		<title>gitignore.it</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Dave Gaeddert">
+
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
+		<script src="js/jquery.gitignore.js"></script>
+
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body ng-controller="GitignoreController">
+
+		<h1 class="text-center">gitignore.it</h1>
+		<h2 class="text-center">Gitignore for beginners.</h2>
+		<h3 class="text-center"><i>gitignore - Specifies intentionally untracked files to ignore</i></h3>
+
+		<a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a>
+		<a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+
+		<hr>
+
+		<div class="container steps-container">
+			<div class="row step">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">1</h1>
+						<p class="step-desc lead">Choose the operating systems that you work on:</p>
+						<div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons" id="os-buttons">
+							<label ng-repeat="template in osTemplates" class="btn btn-primary" ng-click="osChange(template)"><input type="checkbox"> {{ template.name }}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row step">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">2</h1>
+						<p class="step-desc lead">Choose the languages that the project uses:</p>
+						<select ng-model="selectedLangs" ng-options="template.name for template in langTemplates" class="form-control" multiple></select>
+					</div>
+				</div>
+			</div>
+			<div class="row step">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">3</h1>
+						<p class="step-desc lead">Choose the editors, frameworks, etc.:</p>
+						<div class="row">
+							<div class="col-sm-6">
+								<h2>Editors</h2>
+								<select ng-model="selectedEditors" ng-options="template.name for template in editorTemplates" class="form-control" multiple></select>
+							</div>
+							<div class="col-sm-6">
+								<h2>Anything else...</h2>
+								<select ng-model="selectedOthers" ng-options="template.name for template in otherTemplates" class="form-control" multiple></select>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<button ng-click="generateGitignore()" class="btn btn-primary btn-lg">Make it!</button>
+			</div>
+
+			<div class="row step">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1>Done!</h1>
+						<pre ng-bind-html="gitignoreOutput"></pre>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

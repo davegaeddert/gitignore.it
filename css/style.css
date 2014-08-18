@@ -1,0 +1,23 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
+body {
+  font-weight: 300;
+}
+select[multiple] {
+  height: 300px;
+}
+.steps-container .step .step-num {
+  position: absolute;
+  top: -30px;
+  left: -15px;
+  background-color: #5bc0de;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  line-height: 50px;
+  text-align: center;
+}
+.steps-container .step .step-desc {
+  text-align: center;
+}
+/*# sourceMappingURL=style.map */
