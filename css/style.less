@@ -6,10 +6,23 @@
 
 body {
 	font-weight: 300;
+	padding-top: 20px;
+	padding-bottom: 100px;
 }
 
 select[multiple] {
 	height: 300px;
+	border: none;
+	.box-shadow(none);
+
+	&:focus {
+		outline: 0;
+		.box-shadow(none);
+	}
+
+	option {
+
+	}
 }
 
 .steps-container {
@@ -25,9 +38,14 @@ select[multiple] {
 			height: 55px;
 			line-height: 50px;
 			text-align: center;
+			.box-shadow(0 0 3px 0 fadeout(black, 50%));
 		}
 		.step-desc {
 			text-align: center;
 		}
 	}
+}
+
+.ace_editor {
+	height: 900px;
 }

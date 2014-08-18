@@ -12,12 +12,18 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script src="bootstrap/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
-		<script src="js/jquery.gitignore.js"></script>
+		<script src="bower_components/angular-ui-ace/ui-ace.min.js"></script>
+		<script src="bower_components/ace-builds/src/ace.js"></script>
+
+
+		<script src="js/gitignore.js"></script>
 
 		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
+
+
 	</head>
 	<body ng-controller="GitignoreController">
 
@@ -25,8 +31,10 @@
 		<h2 class="text-center">Gitignore for beginners.</h2>
 		<h3 class="text-center"><i>gitignore - Specifies intentionally untracked files to ignore</i></h3>
 
-		<a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a>
-		<a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+		<div class="text-center">
+			Related links: <a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a> | <a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+		</div>
+
 
 		<hr>
 
@@ -37,33 +45,33 @@
 						<h1 class="step-num">1</h1>
 						<p class="step-desc lead">Choose the operating systems that you work on:</p>
 						<div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons" id="os-buttons">
-							<label ng-repeat="template in osTemplates" class="btn btn-primary" ng-click="osChange(template)"><input type="checkbox"> {{ template.name }}</label>
+							<label ng-repeat="template in osTemplates" class="btn btn-success" ng-click="osChange(template)"><input type="checkbox"> {{ template.name }}</label>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row step">
+			<div class="row step" ng-hide="stepsCompleted < 1">
 				<div class="col-sm-12">
 					<div class="well">
 						<h1 class="step-num">2</h1>
 						<p class="step-desc lead">Choose the languages that the project uses:</p>
-						<select ng-model="selectedLangs" ng-options="template.name for template in langTemplates" class="form-control" multiple></select>
+						<select ng-model="selectedLangs" ng-change="didStep(2)" ng-options="template.name for template in langTemplates" class="form-control" multiple></select>
 					</div>
 				</div>
 			</div>
-			<div class="row step">
+			<div class="row step" ng-hide="stepsCompleted < 2">
 				<div class="col-sm-12">
 					<div class="well">
 						<h1 class="step-num">3</h1>
 						<p class="step-desc lead">Choose the editors, frameworks, etc.:</p>
 						<div class="row">
 							<div class="col-sm-6">
-								<h2>Editors</h2>
-								<select ng-model="selectedEditors" ng-options="template.name for template in editorTemplates" class="form-control" multiple></select>
+								<p class="text-center">Editors</p>
+								<select ng-model="selectedEditors" ng-change="didStep(3)" ng-options="template.name for template in editorTemplates" class="form-control" multiple></select>
 							</div>
 							<div class="col-sm-6">
-								<h2>Anything else...</h2>
-								<select ng-model="selectedOthers" ng-options="template.name for template in otherTemplates" class="form-control" multiple></select>
+								<p class="text-center">Anything else...</p>
+								<select ng-model="selectedOthers" ng-change="didStep(3)" ng-options="template.name for template in otherTemplates" class="form-control" multiple></select>
 							</div>
 						</div>
 
@@ -71,19 +79,21 @@
 				</div>
 			</div>
 
-			<div class="text-center">
+			<div class="text-center" ng-hide="stepsCompleted < 3">
 				<button ng-click="generateGitignore()" class="btn btn-primary btn-lg">Make it!</button>
 			</div>
 
-			<div class="row step">
+			<div class="row step" ng-hide="stepsCompleted < 4">
 				<div class="col-sm-12">
 					<div class="well">
 						<h1>Done!</h1>
-						<pre ng-bind-html="gitignoreOutput"></pre>
+						<p>Put this in a file named .gitignore, at the top level of your Git repo.</p>
+						<div ui-ace="{theme:'solarized_light',mode:'dot'}" ng-model="gitignoreOutput"></div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 
 	</body>
 </html>

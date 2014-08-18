@@ -1,9 +1,19 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
 body {
   font-weight: 300;
+  padding-top: 20px;
+  padding-bottom: 100px;
 }
 select[multiple] {
   height: 300px;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+select[multiple]:focus {
+  outline: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 .steps-container .step .step-num {
   position: absolute;
@@ -16,8 +26,13 @@ select[multiple] {
   height: 55px;
   line-height: 50px;
   text-align: center;
+  -webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 .steps-container .step .step-desc {
   text-align: center;
+}
+.ace_editor {
+  height: 900px;
 }
 /*# sourceMappingURL=style.map */
