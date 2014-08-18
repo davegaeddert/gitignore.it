@@ -35,4 +35,26 @@ select[multiple]:focus {
 .ace_editor {
   height: 900px;
 }
+.credits {
+  margin-top: 100px;
+  color: #ccc;
+}
+.credits a {
+  color: #ccc;
+  letter-spacing: 1px;
+}
+.credits a.fork {
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  -webkit-transition: color 0.5s;
+  -o-transition: color 0.5s;
+  transition: color 0.5s;
+}
+.credits a.fork span.fa {
+  font-size: 1.5em;
+}
+.credits a.fork:hover {
+  text-decoration: none;
+  color: #333;
+}
 /*# sourceMappingURL=style.map */
