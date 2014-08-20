@@ -194,6 +194,13 @@ angular.module('gitignoreApp', ['ui.ace'])
 			$scope.stepsCompleted = $scope.stepsCompleted == step - 1 ? step : $scope.stepsCompleted;
 		}
 
+		$scope.loading = function() {
+			return $scope.osTemplates.length !=0 &&
+			$scope.langTemplates.length !=0 &&
+			$scope.editorTemplates.length !=0 &&
+			$scope.otherTemplates.length !=0;
+		}
+
 		function apiError(data, status, headers, config) {
 			console.log("API Error");
 		 	console.log(data);

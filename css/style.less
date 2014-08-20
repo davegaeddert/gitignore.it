@@ -50,6 +50,30 @@ select[multiple] {
 	height: 900px;
 }
 
+.loading {
+	font-size: 60px;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+
+.ng-hide {
+  //this is just another form of hiding an element
+  display:block!important;
+  position:absolute;
+  top:-9999px;
+  left:-9999px;
+}
+.animate-hide, .step {
+	.transition(all linear 0.5s);
+	.opacity(1);
+	&.ng-hide-add, &.ng-hide-remove {
+
+	}
+	&.ng-hide {
+		.opacity(0);
+	}
+}
+
 .credits {
 	margin-top: 100px;
 	color: #ccc;

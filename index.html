@@ -39,8 +39,10 @@
 
 		<hr>
 
+		<div class="container loading text-center animate-hide" ng-hide="loading()">loading...</div>
+
 		<div class="container steps-container">
-			<div class="row step">
+			<div class="row step" ng-hide="!loading()">
 				<div class="col-sm-12">
 					<div class="well">
 						<h1 class="step-num">1</h1>

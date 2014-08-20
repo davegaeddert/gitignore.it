@@ -35,6 +35,30 @@ select[multiple]:focus {
 .ace_editor {
   height: 900px;
 }
+.loading {
+  font-size: 60px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+.ng-hide {
+  display: block!important;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+.animate-hide,
+.step {
+  -webkit-transition: all linear 0.5s;
+  -o-transition: all linear 0.5s;
+  transition: all linear 0.5s;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.animate-hide.ng-hide,
+.step.ng-hide {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
 .credits {
   margin-top: 100px;
   color: #ccc;
