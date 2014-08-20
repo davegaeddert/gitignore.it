@@ -48,7 +48,7 @@
 						<h1 class="step-num">1</h1>
 						<p class="step-desc lead">Choose the operating systems that you work on:</p>
 						<div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons" id="os-buttons">
-							<label ng-repeat="template in osTemplates" class="btn btn-success" ng-click="osChange(template)"><input type="checkbox"> {{ template.name }}</label>
+							<label ng-repeat="template in osTemplates" class="btn btn-success" ng-click="template.selected=!template.selected;didStep(1)"><input type="checkbox"> {{ template.name }}</label>
 						</div>
 					</div>
 				</div>
@@ -58,7 +58,9 @@
 					<div class="well">
 						<h1 class="step-num">2</h1>
 						<p class="step-desc lead">Choose the languages that the project uses:</p>
-						<select ng-model="selectedLangs" ng-change="didStep(2)" ng-options="template.name for template in langTemplates" class="form-control" multiple></select>
+						<ul class="chooser">
+							<li ng-repeat="template in langTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(2)">{{ template.name }}</li>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -70,11 +72,15 @@
 						<div class="row">
 							<div class="col-sm-6">
 								<p class="text-center">Editors</p>
-								<select ng-model="selectedEditors" ng-change="didStep(3)" ng-options="template.name for template in editorTemplates" class="form-control" multiple></select>
+								<ul class="chooser">
+									<li ng-repeat="template in editorTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(3)">{{ template.name }}</li>
+								</ul>
 							</div>
 							<div class="col-sm-6">
 								<p class="text-center">Anything else...</p>
-								<select ng-model="selectedOthers" ng-change="didStep(3)" ng-options="template.name for template in otherTemplates" class="form-control" multiple></select>
+								<ul class="chooser">
+									<li ng-repeat="template in otherTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(3)">{{ template.name }}</li>
+								</ul>
 							</div>
 						</div>
 

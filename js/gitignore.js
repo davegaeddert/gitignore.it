@@ -48,13 +48,9 @@ angular.module('gitignoreApp', ['ui.ace'])
 		];
 
 		$scope.osTemplates = [];
-		$scope.selectedOSs = [];
 		$scope.langTemplates = [];
-		$scope.selectedLangs = [];
 		$scope.editorTemplates = [];
-		$scope.selectedEditors = [];
 		$scope.otherTemplates = [];
-		$scope.selectedOthers = [];
 
 		$scope.stepsCompleted = 0;
 
@@ -121,7 +117,6 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 				name: name,
 		 				apiUrl: contents[i].url,
 		 				gitignoreApi: false,
-		 				checked: false,
 		 			});
 		 		} else if ($.inArray(name, editors) !== -1) {
 		 			$scope.editorTemplates.push({
@@ -145,7 +140,12 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 	var output = "";
 
 		 	var allTemplates = [];
-		 	allTemplates = allTemplates.concat($scope.selectedOSs).concat($scope.selectedLangs).concat($scope.selectedEditors).concat($scope.selectedOthers);
+		 	allTemplates = allTemplates
+		 		.concat($scope.osTemplates)
+		 		.concat($scope.langTemplates)
+		 		.concat($scope.editorTemplates)
+		 		.concat($scope.otherTemplates);
+		 	allTemplates = allTemplates.filter(filterSelected);
 
 		 	angular.forEach(allTemplates, function(template) {
 		 		$http({
@@ -178,16 +178,8 @@ angular.module('gitignoreApp', ['ui.ace'])
 
 		 }
 
-		$scope.osChange = function(template) {
-			template.checked = !template.checked;
-			$scope.selectedOSs = [];
-			angular.forEach($scope.osTemplates, function(value) {
-				if (value.checked) {
-					$scope.selectedOSs.push(value);
-				}
-			});
-
-			$scope.didStep(1);
+		function filterSelected(item) {
+			return item.selected === true;
 		}
 
 		$scope.didStep = function(step) {
