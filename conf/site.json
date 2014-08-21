@@ -1,0 +1,16 @@
+{
+  "domain": "gitignore.it", 
+  "name": "GitignoreIt", 
+  "db_type": null, 
+  "host_ip": "75.126.24.85", 
+  "subdomains": [
+    "www"
+  ], 
+  "repo": "git@github.com:davegaeddert/gitignore.it.git", 
+  "host": "web377.webfaction.com", 
+  "website_name": "gitignoreit_site", 
+  "host_name": "Web377", 
+  "app_base": "/home/fhd/sites/GitignoreIt/site/", 
+  "type": "php", 
+  "app_name": "gitignoreit_php54"
+}
