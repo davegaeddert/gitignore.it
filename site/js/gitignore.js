@@ -64,87 +64,95 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 // get the github/gitignore templates
 		 var apiBase = "https://api.github.com";
 		 var templatesBase = apiBase + "/gitignore/templates";
+		 var creds = {};
 
-		 // for some reason this doesn't include the Global folder, OS and editor ignores
-		 $http({
-		 	method: 'GET',
-		 	url: templatesBase,
-		 	cache: true,
-		 	headers: {
-		 		'Authorization': 'token bc01100a6338a677b72469843dcdfe756246b005'
+		 $http.post('secret.php').success(function(data) {
+		 	if (data) {
+		 		creds = data;
+		 		getTemplates(creds);
+		 	} else {
+		 		jQuery(".loading").text("FAILED");
 		 	}
-		 }).success(function(data, status, headers, config) {
-		 	if (status != 200) {
-		 		apiError(data, status, headers, config);
-		 		return;
-		 	}
-
-		 	var templates = data;
-
-		 	for (var i = 0; i < templates.length; i++) {
-		 		if ($.inArray(templates[i], langs) !== -1) {
-		 			$scope.langTemplates.push({
-		 				name: templates[i],
-		 				apiUrl: templatesBase+"/"+templates[i],
-		 				gitignoreApi: true,
-		 				content: false,
-		 			});
-		 		} else {
-		 			$scope.otherTemplates.push({
-		 				name: templates[i],
-		 				apiUrl: templatesBase+"/"+templates[i],
-		 				gitignoreApi: true,
-		 				content: false,
-		 			});
-		 		}
-		 	};
 		 });
 
-		 // do the Global folder directly
-		 $http({
-		 	method: 'GET',
-		 	url: apiBase+"/repos/github/gitignore/contents/Global",
-		 	cache: true,
-		 	headers: {
-		 		'Authorization': 'token bc01100a6338a677b72469843dcdfe756246b005'
-		 	}
-		 }).success(function(data, status, headers, config) {
-		 	if (status != 200) {
-		 		apiError(data, status, headers, config);
-		 		return;
-		 	}
+		 function getTemplates() {
+			 // for some reason this doesn't include the Global folder, OS and editor ignores
+			 $http({
+			 	method: 'GET',
+			 	url: templatesBase,
+			 	cache: true,
+			 	params: creds,
+			 }).success(function(data, status, headers, config) {
+			 	if (status != 200) {
+			 		apiError(data, status, headers, config);
+			 		return;
+			 	}
 
-		 	var contents = data;
+			 	var templates = data;
 
-		 	for (var i = 0; i < contents.length; i++) {
-		 		if (contents[i].type != "file" || contents[i].name.split('.').pop() != "gitignore")
-		 			continue;
+			 	for (var i = 0; i < templates.length; i++) {
+			 		if ($.inArray(templates[i], langs) !== -1) {
+			 			$scope.langTemplates.push({
+			 				name: templates[i],
+			 				apiUrl: templatesBase+"/"+templates[i],
+			 				gitignoreApi: true,
+			 				content: false,
+			 			});
+			 		} else {
+			 			$scope.otherTemplates.push({
+			 				name: templates[i],
+			 				apiUrl: templatesBase+"/"+templates[i],
+			 				gitignoreApi: true,
+			 				content: false,
+			 			});
+			 		}
+			 	};
+			 });
 
-		 		var name = contents[i].name.split('.')[0];
-		 		if ($.inArray(name, oss) !== -1) {
-		 			$scope.osTemplates.push({
-		 				name: name,
-		 				apiUrl: contents[i].url,
-		 				gitignoreApi: false,
-		 				content: false,
-		 			});
-		 		} else if ($.inArray(name, editors) !== -1) {
-		 			$scope.editorTemplates.push({
-		 				name: name,
-		 				apiUrl: contents[i].url,
-		 				gitignoreApi: false,
-		 				content: false,
-		 			});
-		 		} else {
-		 			$scope.otherTemplates.push({
-		 				name: name,
-		 				apiUrl: contents[i].url,
-		 				gitignoreApi: false,
-		 				content: false,
-		 			});
-		 		}
-		 	};
-		 });
+			 // do the Global folder directly
+			 $http({
+			 	method: 'GET',
+			 	url: apiBase+"/repos/github/gitignore/contents/Global",
+			 	cache: true,
+			 	params: creds,
+			 }).success(function(data, status, headers, config) {
+			 	if (status != 200) {
+			 		apiError(data, status, headers, config);
+			 		return;
+			 	}
+
+			 	var contents = data;
+
+			 	for (var i = 0; i < contents.length; i++) {
+			 		if (contents[i].type != "file" || contents[i].name.split('.').pop() != "gitignore")
+			 			continue;
+
+			 		var name = contents[i].name.split('.')[0];
+			 		if ($.inArray(name, oss) !== -1) {
+			 			$scope.osTemplates.push({
+			 				name: name,
+			 				apiUrl: contents[i].url,
+			 				gitignoreApi: false,
+			 				content: false,
+			 			});
+			 		} else if ($.inArray(name, editors) !== -1) {
+			 			$scope.editorTemplates.push({
+			 				name: name,
+			 				apiUrl: contents[i].url,
+			 				gitignoreApi: false,
+			 				content: false,
+			 			});
+			 		} else {
+			 			$scope.otherTemplates.push({
+			 				name: name,
+			 				apiUrl: contents[i].url,
+			 				gitignoreApi: false,
+			 				content: false,
+			 			});
+			 		}
+			 	};
+			 });
+		}
 
 		 $scope.generateGitignore = function() {
 		 	$scope.didStep(4);
@@ -166,9 +174,7 @@ angular.module('gitignoreApp', ['ui.ace'])
 				 	method: 'GET',
 				 	url: template.apiUrl,
 				 	cache: true,
-				 	headers: {
-				 		'Authorization': 'token bc01100a6338a677b72469843dcdfe756246b005'
-				 	}
+				 	params: creds,
 				 }).success(function(data, status, headers, config) {
 				 	if (status != 200) {
 				 		apiError(data, status, headers, config);
