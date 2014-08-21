@@ -28,16 +28,24 @@
 	</head>
 	<body ng-controller="GitignoreController">
 
-		<h1 class="text-center">gitignore.it</h1>
-		<h2 class="text-center">Gitignore for beginners.</h2>
-		<h3 class="text-center"><i>gitignore - Specifies intentionally untracked files to ignore</i></h3>
+		<h1 class="text-center title">gitignore.it</h1>
 
-		<div class="text-center">
-			Related links: <a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a> | <a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+		<br>
+
+		<!-- <h2 class="text-center">Gitignore for beginners.</h2> -->
+		<div class="container text-center">
+			<p class="lead">The .gitignore file is an important one to know if you're learning how to use Git.</p>
+			<h3><a href="#" id="tell-me-more">Tell me more.</a></h3>
+			<div style="display:none;">
+				<p>It's simply a file named <code>.gitignore</code> placed in the root of your Git repo. In it, <a href="http://git-scm.com/docs/gitignore">each line identifies files</a> that you do not want tracked in your repository - large files, user content, private configuration files, anything that you don't want to be a part of your project repo. The purpose of this site is to help you get started using .gitignore, <a href="https://github.com/github/gitignore">using a collection of templates maintained by GitHub</a>.</p>
+
+				<small>
+					Related links: <a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a> | <a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+				</small>
+			</div>
 		</div>
 
-
-		<hr>
+		<br>
 
 		<div class="container loading text-center animate-hide" ng-hide="loading()">loading...</div>
 
@@ -83,7 +91,8 @@
 								</ul>
 							</div>
 						</div>
-
+						<a href="#" ng-click="didStep(3)" class="pull-right skip"><small>skip <span class="fa fa-hand-o-right"></span></small></a>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>

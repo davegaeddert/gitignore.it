@@ -1,3 +1,10 @@
+jQuery(function($) {
+	$("#tell-me-more").click(function(e) {
+		e.preventDefault();
+		$(this).parent().next().slideDown();
+	});
+});
+
 angular.module('gitignoreApp', ['ui.ace'])
 	.controller('GitignoreController', ['$scope', '$http', '$sce', function ($scope, $http, $sce) {
 

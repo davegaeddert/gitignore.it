@@ -70,10 +70,18 @@ ul.chooser li {
   line-height: 30px;
   cursor: pointer;
   padding: 0 15px;
+  width: 33%;
+  float: left;
 }
 ul.chooser li.selected {
   background-color: #5bc0de;
   color: white;
+}
+ul.chooser li.selected:after {
+  content: " x";
+}
+.skip {
+  padding-top: 25px;
 }
 .credits {
   margin-top: 100px;
