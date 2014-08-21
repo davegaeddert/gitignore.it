@@ -15,6 +15,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
 		<script src="bower_components/angular-ui-ace/ui-ace.min.js"></script>
 		<script src="bower_components/ace-builds/src/ace.js"></script>
+		<script src="bower_components/FileSaver/FileSaver.min.js"></script>
 
 
 		<script src="js/gitignore.js"></script>
@@ -91,7 +92,7 @@
 								</ul>
 							</div>
 						</div>
-						<a href="#" ng-click="didStep(3)" class="pull-right skip"><small>skip <span class="fa fa-hand-o-right"></span></small></a>
+						<span ng-click="didStep(3)" class="pull-right skip"><small>skip <span class="fa fa-hand-o-right"></span></small></span>
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -99,14 +100,16 @@
 
 			<div class="text-center" ng-hide="stepsCompleted < 3">
 				<button ng-click="generateGitignore()" class="btn btn-primary btn-lg">Make it!</button>
+				<br>
 			</div>
 
 			<div class="row step" ng-hide="stepsCompleted < 4">
 				<div class="col-sm-12">
 					<div class="well">
 						<h1>Done!</h1>
+						<button ng-click="download()" class="btn btn-success"><span class="fa file-code-0"></span> Download then rename to .gitignore</button>
 						<p>Put this in a file named .gitignore, at the top level of your Git repo.</p>
-						<div ui-ace="{theme:'solarized_light',mode:'dot'}" ng-model="gitignoreOutput"></div>
+						<div ui-ace="{theme:'idle_fingers',mode:'dot'}" ng-model="gitignoreOutput"></div>
 					</div>
 				</div>
 			</div>

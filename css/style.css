@@ -77,11 +77,9 @@ ul.chooser li.selected {
   background-color: #5bc0de;
   color: white;
 }
-ul.chooser li.selected:after {
-  content: " x";
-}
 .skip {
   padding-top: 25px;
+  cursor: pointer;
 }
 .credits {
   margin-top: 100px;

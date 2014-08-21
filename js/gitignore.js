@@ -87,12 +87,14 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 				name: templates[i],
 		 				apiUrl: templatesBase+"/"+templates[i],
 		 				gitignoreApi: true,
+		 				content: false,
 		 			});
 		 		} else {
 		 			$scope.otherTemplates.push({
 		 				name: templates[i],
 		 				apiUrl: templatesBase+"/"+templates[i],
 		 				gitignoreApi: true,
+		 				content: false,
 		 			});
 		 		}
 		 	};
@@ -124,18 +126,21 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 				name: name,
 		 				apiUrl: contents[i].url,
 		 				gitignoreApi: false,
+		 				content: false,
 		 			});
 		 		} else if ($.inArray(name, editors) !== -1) {
 		 			$scope.editorTemplates.push({
 		 				name: name,
 		 				apiUrl: contents[i].url,
 		 				gitignoreApi: false,
+		 				content: false,
 		 			});
 		 		} else {
 		 			$scope.otherTemplates.push({
 		 				name: name,
 		 				apiUrl: contents[i].url,
 		 				gitignoreApi: false,
+		 				content: false,
 		 			});
 		 		}
 		 	};
@@ -144,7 +149,7 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 $scope.generateGitignore = function() {
 		 	$scope.didStep(4);
 
-		 	var output = "";
+		 	// var output = "";
 
 		 	var allTemplates = [];
 		 	allTemplates = allTemplates
@@ -155,6 +160,8 @@ angular.module('gitignoreApp', ['ui.ace'])
 		 	allTemplates = allTemplates.filter(filterSelected);
 
 		 	angular.forEach(allTemplates, function(template) {
+		 		// skip http if template.content, should be caching anyway so fine for now
+
 		 		$http({
 				 	method: 'GET',
 				 	url: template.apiUrl,
@@ -168,17 +175,29 @@ angular.module('gitignoreApp', ['ui.ace'])
 				 		return;
 				 	}
 
-				 	output += '### '+template.name+' ###\n';
-
+				 	var content = '### '+template.name+' ###\n';
 				 	if (template.gitignoreApi) {
-				 		output += data.source;
+				 		content += data.source;
 				 	} else {
-				 		output += atob(data.content);
+				 		content += atob(data.content);
 				 	}
+				 	content += '\n\n';
+				 	template.content = content;
+				 	// console.log(allTemplates);
 
-				 	output += '\n\n';
+				 	// $scope.gitignoreOutput = output;
 
-				 	$scope.gitignoreOutput = output;
+				 	var ready = true;
+				 	angular.forEach(allTemplates, function(t) {
+				 		ready = ready && t.content !== false;
+				 	});
+				 	if (ready) {
+				 		var output = "";
+				 		angular.forEach(allTemplates, function(t) {
+					 		output += t.content;
+					 	});
+				 		$scope.gitignoreOutput = output;
+				 	}
 
 				 });
 		 	});
@@ -198,6 +217,17 @@ angular.module('gitignoreApp', ['ui.ace'])
 			$scope.langTemplates.length !=0 &&
 			$scope.editorTemplates.length !=0 &&
 			$scope.otherTemplates.length !=0;
+		}
+
+		$scope.download = function() {
+			try {
+				// var isSupported = !!new Blob;
+				var blob = new Blob([$scope.gitignoreOutput], {type: "text/plain;charset=utf-8"});
+				saveAs(blob, "rename_to_.gitignore.txt");
+			} catch (e) {
+				console.log(e);
+				alert("Why aren't you using a modern browser?!")
+			}
 		}
 
 		function apiError(data, status, headers, config) {
