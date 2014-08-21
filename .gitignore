@@ -1,9 +1,1 @@
-*.pyc
-*~
-*.swp
-*.swo
-*.sublime-project
-*.sublime-workspace
-.DS_Store
-fabfile.py
 Guardfile

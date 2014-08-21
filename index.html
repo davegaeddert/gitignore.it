@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html ng-app="gitignoreApp">
+	<head>
+		<meta charset="utf-8">
+		<title>gitignore.it</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Dave Gaeddert">
+
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/style.css" media="screen" charset="utf-8">
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
+		<script src="bower_components/angular-ui-ace/ui-ace.min.js"></script>
+		<script src="bower_components/ace-builds/src/ace.js"></script>
+		<script src="bower_components/FileSaver/FileSaver.min.js"></script>
+
+
+		<script src="js/gitignore.js"></script>
+
+		<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+		<!--[if lt IE 9]>
+		  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+
+	</head>
+	<body ng-controller="GitignoreController">
+
+		<h1 class="text-center title">gitignore.it</h1>
+
+		<br>
+
+		<!-- <h2 class="text-center">Gitignore for beginners.</h2> -->
+		<div class="container text-center">
+			<p class="lead">The .gitignore file is an important one to know if you're learning how to use Git.</p>
+			<h3><a href="#" id="tell-me-more">Tell me more.</a></h3>
+			<div style="display:none;">
+				<p>It's simply a file named <code>.gitignore</code> placed in the root of your Git repo. In it, <a href="http://git-scm.com/docs/gitignore">each line identifies files</a> that you do not want tracked in your repository - large files, user content, private configuration files, anything that you don't want to be a part of your project repo. The purpose of this site is to help you get started using .gitignore, <a href="https://github.com/github/gitignore">using a collection of templates maintained by GitHub</a>.</p>
+
+				<small>
+					Related links: <a href="http://git-scm.com/docs/gitignore">gitignore Manual Page</a> | <a href="https://help.github.com/articles/ignoring-files">GitHub Help</a>
+				</small>
+			</div>
+		</div>
+
+		<br>
+
+		<div class="container loading text-center animate-hide" ng-hide="loading()">loading...</div>
+
+		<div class="container steps-container">
+			<div class="row step" ng-hide="!loading()">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">1</h1>
+						<p class="step-desc lead">Choose the operating systems that you work on:</p>
+						<div class="btn-group btn-group-lg btn-group-justified" data-toggle="buttons" id="os-buttons">
+							<label ng-repeat="template in osTemplates" class="btn btn-success" ng-click="template.selected=!template.selected;didStep(1)"><input type="checkbox"> {{ template.name }}</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row step" ng-hide="stepsCompleted < 1">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">2</h1>
+						<p class="step-desc lead">Choose the languages that the project uses:</p>
+						<ul class="chooser">
+							<li ng-repeat="template in langTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(2)">{{ template.name }}</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="row step" ng-hide="stepsCompleted < 2">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1 class="step-num">3</h1>
+						<p class="step-desc lead">Choose the editors, frameworks, etc.:</p>
+						<div class="row">
+							<div class="col-sm-6">
+								<p class="text-center">Editors</p>
+								<ul class="chooser">
+									<li ng-repeat="template in editorTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(3)">{{ template.name }}</li>
+								</ul>
+							</div>
+							<div class="col-sm-6">
+								<p class="text-center">Anything else...</p>
+								<ul class="chooser">
+									<li ng-repeat="template in otherTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(3)">{{ template.name }}</li>
+								</ul>
+							</div>
+						</div>
+						<span ng-click="didStep(3)" class="pull-right skip"><small>skip <span class="fa fa-hand-o-right"></span></small></span>
+						<div class="clearfix"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center" ng-hide="stepsCompleted < 3">
+				<button ng-click="generateGitignore()" class="btn btn-primary btn-lg">Make it!</button>
+				<br>
+			</div>
+
+			<div class="row step" ng-hide="stepsCompleted < 4">
+				<div class="col-sm-12">
+					<div class="well">
+						<h1>Done!</h1>
+						<button ng-click="download()" class="btn btn-success"><span class="fa file-code-0"></span> Download then rename to .gitignore</button>
+						<p>Put this in a file named .gitignore, at the top level of your Git repo.</p>
+						<div ui-ace="{theme:'idle_fingers',mode:'dot'}" ng-model="gitignoreOutput"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="text-center credits">
+				<a href="https://github.com/davegaeddert/gitignore.it" class="fork">fork <span class="fa fa-code-fork"></span> me</a>
+				<br>
+				<a href="https://github.com/davegaeddert"><small><span class="fa fa-github"></span> davegaeddert</small></a> / <a href="https://github.com/flinthillsdesign"><small><span class="fa fa-github"></span> flinthillsdesign</small></a>
+			</div>
+
+		</div>
+
+
+	</body>
+</html>

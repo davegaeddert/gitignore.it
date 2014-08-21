@@ -1,0 +1,130 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300);
+
+@import (reference) "../bootstrap/less/variables";
+@import (reference) "../bootstrap-custom/less/variables-custom";
+@import (reference) "../bootstrap/less/mixins";
+
+body {
+	font-weight: 300;
+	padding-top: 20px;
+	padding-bottom: 100px;
+}
+
+.title {
+
+}
+
+select[multiple] {
+	height: 300px;
+	border: none;
+	.box-shadow(none);
+
+	&:focus {
+		outline: 0;
+		.box-shadow(none);
+	}
+
+	option {
+
+	}
+}
+
+.steps-container {
+	.step {
+		.step-num {
+			position: absolute;
+			top: -30px;
+			left: -15px;
+			background-color: @brand-info;
+			color: white;
+			border-radius: 50%;
+			width: 55px;
+			height: 55px;
+			line-height: 50px;
+			text-align: center;
+			.box-shadow(0 0 3px 0 fadeout(black, 50%));
+		}
+		.step-desc {
+			text-align: center;
+		}
+	}
+}
+
+.ace_editor {
+	height: 900px;
+}
+
+.loading {
+	font-size: 60px;
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+}
+
+.ng-hide {
+  //this is just another form of hiding an element
+  display:block!important;
+  position:absolute;
+  top:-9999px;
+  left:-9999px;
+}
+.animate-hide, .step {
+	.transition(all linear 0.5s);
+	.opacity(1);
+	&.ng-hide-add, &.ng-hide-remove {
+
+	}
+	&.ng-hide {
+		.opacity(0);
+	}
+}
+
+ul.chooser {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-height: 400px;
+	overflow: auto;
+	// border-top: 1px solid #bbb;
+	// border-bottom: 1px solid #bbb;
+
+	li {
+		line-height: 30px;
+		cursor: pointer;
+		padding: 0 15px;
+		width: 33%;
+		float: left;
+
+		&.selected {
+			background-color: @brand-info;
+			color: white;
+		}
+	}
+}
+
+.skip {
+	padding-top:25px;
+	cursor: pointer;
+}
+
+.credits {
+	margin-top: 100px;
+	color: #ccc;
+
+	a {
+		color: #ccc;
+		letter-spacing: 1px;
+
+		&.fork {
+			letter-spacing: 10px;
+			text-transform: uppercase;
+			.transition(color .5s);
+			span.fa {
+				font-size: 1.5em;
+			}
+			&:hover {
+				text-decoration: none;
+				color: #333;
+			}
+		}
+	}
+}
