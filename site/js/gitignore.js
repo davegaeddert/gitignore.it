@@ -51,6 +51,7 @@ angular.module('gitignoreApp', ['ui.ace'])
 			'SlickEdit',
 			'SublimeText',
 			'TextMate',
+			'vim',
 			'Xcode',
 		];
 
@@ -155,9 +156,6 @@ angular.module('gitignoreApp', ['ui.ace'])
 		}
 
 		 $scope.generateGitignore = function() {
-		 	$scope.didStep(4);
-
-		 	// var output = "";
 
 		 	var allTemplates = [];
 		 	allTemplates = allTemplates
@@ -189,9 +187,6 @@ angular.module('gitignoreApp', ['ui.ace'])
 				 	}
 				 	content += '\n\n';
 				 	template.content = content;
-				 	// console.log(allTemplates);
-
-				 	// $scope.gitignoreOutput = output;
 
 				 	var ready = true;
 				 	angular.forEach(allTemplates, function(t) {
@@ -216,6 +211,7 @@ angular.module('gitignoreApp', ['ui.ace'])
 
 		$scope.didStep = function(step) {
 			$scope.stepsCompleted = $scope.stepsCompleted == step - 1 ? step : $scope.stepsCompleted;
+			$scope.generateGitignore();
 		}
 
 		$scope.loading = function() {

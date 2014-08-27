@@ -82,6 +82,8 @@
 						<ul class="chooser">
 							<li ng-repeat="template in langTemplates" ng-class="template.selected==true?'selected':''" ng-click="template.selected=!template.selected;didStep(2)">{{ template.name }}</li>
 						</ul>
+						<span ng-click="didStep(2)" class="pull-right skip text-info"><small>skip <span class="fa fa-hand-o-right"></span></small></span>
+						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
@@ -104,14 +106,14 @@
 								</ul>
 							</div>
 						</div>
-						<span ng-click="didStep(3)" class="pull-right skip"><small>skip <span class="fa fa-hand-o-right"></span></small></span>
+						<span ng-click="didStep(3)" class="pull-right skip text-info"><small>skip <span class="fa fa-hand-o-right"></span></small></span>
 						<div class="clearfix"></div>
 					</div>
 				</div>
 			</div>
 
 			<div class="text-center" ng-hide="stepsCompleted < 3">
-				<button ng-click="generateGitignore()" class="btn btn-primary btn-block btn-lg"><span class="fa fa-cog fa-spin"></span> &nbsp;&nbsp;Make it!&nbsp;&nbsp; <span class="fa fa-cog fa-spin"></span></button>
+				<button ng-click="didStep(4)" class="btn btn-primary btn-block btn-lg"><span class="fa fa-cog fa-spin"></span> &nbsp;&nbsp;Make it!&nbsp;&nbsp; <span class="fa fa-cog fa-spin"></span></button>
 				<br>
 			</div>
 
